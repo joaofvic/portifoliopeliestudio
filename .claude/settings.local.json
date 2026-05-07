@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(mkdir -p \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\public\\\\brand\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\public\\\\fonts\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\public\\\\projects\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\app\\\\portfolio\\\\[slug]\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\app\\\\sobre\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\app\\\\contato\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\components\\\\layout\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\components\\\\home\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\components\\\\portfolio\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\components\\\\ui\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\content\\\\projects\" \"C:\\\\Users\\\\ernan\\\\Documents\\\\portifolio\\\\lib\")",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(netstat -ano)",
+      "Bash(taskkill /F /PID 1796)"
+    ]
+  }
+}

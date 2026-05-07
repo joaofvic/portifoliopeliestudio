@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-ink: #151f23;
+    --color-bone: #e6edf1;
+    --color-terracotta: #e26c4b;
+  }
+
+  html {
+    background-color: #151f23;
+    color: #e6edf1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-host), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #e26c4b;
+    color: #151f23;
+  }
+}
+
+@layer utilities {
+  .container-x {
+    @apply px-6 md:px-12 lg:px-16;
+  }
+  .marquee-track {
+    width: max-content;
+    will-change: transform;
+  }
+}

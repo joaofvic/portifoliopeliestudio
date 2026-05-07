@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+  <rect width="800" height="1000" fill="#beb99c"/>
+  <circle cx="400" cy="500" r="200" fill="#151f23" opacity="0.08"/>
+  <text x="50%" y="52%" text-anchor="middle" font-family="serif" font-size="180" fill="#151f23" opacity="0.25">ē</text>
+</svg>
