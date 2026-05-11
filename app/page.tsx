@@ -1,6 +1,7 @@
 import Hero from '@/components/home/Hero';
 import Manifesto from '@/components/home/Manifesto';
 import ClientMarquee from '@/components/home/ClientMarquee';
+import ServicesGrid from '@/components/home/ServicesGrid';
 import FeaturedGrid from '@/components/home/FeaturedGrid';
 import MethodAccordion from '@/components/home/MethodAccordion';
 import { getFeaturedProjects } from '@/lib/projects';
@@ -12,6 +13,7 @@ export default function HomePage() {
       <Hero />
       <ClientMarquee />
       <Manifesto />
+      <ServicesGrid />
       <FeaturedGrid projects={featured} />
       <MethodAccordion />
     </>

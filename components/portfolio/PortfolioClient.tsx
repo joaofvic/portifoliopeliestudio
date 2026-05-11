@@ -45,17 +45,15 @@ export default function PortfolioClient({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <div className="container-x sticky top-20 md:top-24 z-30 bg-ink/80 backdrop-blur-md py-4 -mx-6 md:-mx-12 lg:-mx-16 px-6 md:px-12 lg:px-16">
+      <div className="container-x sticky top-20 md:top-24 z-30 py-4 bg-ink/80 backdrop-blur-md">
         <FilterChips active={active} onChange={handleChange} counts={counts} />
       </div>
 
       <div className="container-x mt-12 md:mt-20">
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-20 md:gap-y-32">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14 md:gap-y-20">
           <AnimatePresence mode="popLayout">
             {filtered.map((project, i) => (
-              <div key={project.slug} className={i % 2 === 1 ? 'md:mt-32' : ''}>
-                <ProjectCard project={project} priority={i < 2} />
-              </div>
+              <ProjectCard key={project.slug} project={project} priority={i < 3} />
             ))}
           </AnimatePresence>
         </motion.div>

@@ -7,17 +7,6 @@ export default function Hero() {
   return (
     <section className="relative pt-32 md:pt-44 pb-20 md:pb-32">
       <div className="container-x">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xs uppercase tracking-[0.3em] text-bone/60 mb-8 md:mb-12"
-        >
-          Estúdio de design
-          <span className="mx-3 text-terracotta">·</span>
-          desde 2021
-        </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,11 +68,8 @@ export default function Hero() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="mt-12 md:mt-16 flex flex-col md:flex-row md:items-end md:justify-between gap-10"
+          className="mt-12 md:mt-16 flex justify-end"
         >
-          <p className="max-w-md text-base md:text-lg text-bone/70 leading-relaxed">
-            Branding, social, motion, fotografia e vídeo nascem do mesmo lugar — uma escuta atenta ao que cada marca quer dizer.
-          </p>
           <Link
             href="/portfolio"
             className="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.18em] hover:text-terracotta transition-colors"
