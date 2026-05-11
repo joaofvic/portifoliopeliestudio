@@ -25,7 +25,7 @@ export default function SobrePage() {
           <span className="italic text-terracotta">pequeno</span> por escolha.
         </h1>
         <p className="mt-12 max-w-2xl text-xl md:text-2xl text-bone/75 leading-relaxed">
-          {site.manifesto}
+          {site.about}
         </p>
       </section>
 

@@ -17,11 +17,11 @@ export default function PortfolioPage() {
           (portfólio)
         </p>
         <h1 className="text-display font-light leading-[0.9]">
-          trabalhos
-          <span className="block italic text-terracotta">selecionados.</span>
+          Seleção de
+          <span className="block italic text-terracotta">projetos.</span>
         </h1>
         <p className="mt-10 max-w-xl text-base md:text-lg text-bone/60">
-          Filtre por tipo de trabalho ou navegue por todos. Cada projeto começa com uma escuta — e termina virando algo que a marca pode chamar de seu.
+          Filtre por tipo de trabalho ou navegue por todos. Cada projeto começa com uma escuta, e termina virando algo que a marca pode chamar de seu.
         </p>
       </div>
 

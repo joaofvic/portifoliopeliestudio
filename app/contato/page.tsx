@@ -11,12 +11,12 @@ export default function ContatoPage() {
       <section className="container-x">
         <p className="text-xs uppercase tracking-[0.3em] text-bone/50 mb-8">(contato)</p>
         <h1 className="text-display font-light leading-[0.9]">
-          conta sua
+          Sua ideia merece
           <br />
-          <span className="italic text-terracotta">ideia</span>.
+          <span className="italic text-terracotta">espaço</span>.
         </h1>
         <p className="mt-12 max-w-xl text-lg md:text-xl text-bone/65 leading-relaxed">
-          A melhor forma de começar é uma conversa. Manda uma mensagem, um e-mail ou DM no Instagram — respondemos em até 48h.
+          Fale com a gente por e-mail, mensagem ou Instagram — será um prazer entender o que você quer construir.
         </p>
       </section>
 

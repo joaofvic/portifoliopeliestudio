@@ -8,7 +8,9 @@ export const site = {
   location: 'Brasil',
   tagline: 'design para marcas que querem ser lembradas',
   manifesto:
-    'Somos um estúdio criativo dedicado a transformar ideias em identidades vivas. Trabalhamos com poucas marcas por vez para entregar muito a cada uma — branding, social, motion, fotografia e vídeo nascem do mesmo lugar.',
+    'Desenvolvemos identidades que nascem de uma visão completa da marca. Do branding ao movimento, da imagem ao digital, tudo é pensado para traduzir essência em presença.',
+  about:
+    'Um estúdio pensado para criar com profundidade. Unimos branding, conteúdo, imagem e movimento para construir marcas com presença, consistência e linguagem própria.',
 };
 
 export const navigation = [
