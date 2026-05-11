@@ -3,17 +3,34 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-ink: #151f23;
-    --color-bone: #e6edf1;
-    --color-terracotta: #e26c4b;
+  :root,
+  [data-theme='dark'] {
+    --color-ink: 16 23 32;
+    --color-bone: 230 237 241;
+    --color-terracotta: 226 108 75;
+    --color-terracotta-light: 228 122 91;
+    --color-terracotta-dark: 224 95 60;
+    --color-sage: 190 185 156;
+    --color-sage-light: 201 195 167;
+    color-scheme: dark;
+  }
+
+  [data-theme='light'] {
+    --color-ink: 255 255 255;
+    --color-bone: 16 23 32;
+    --color-terracotta: 226 108 75;
+    --color-terracotta-light: 228 122 91;
+    --color-terracotta-dark: 224 95 60;
+    --color-sage: 120 117 92;
+    --color-sage-light: 145 141 113;
+    color-scheme: light;
   }
 
   html {
-    background-color: #151f23;
-    color: #e6edf1;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    background-color: rgb(var(--color-ink));
+    color: rgb(var(--color-bone));
   }
 
   body {
@@ -23,8 +40,8 @@
   }
 
   ::selection {
-    background-color: #e26c4b;
-    color: #151f23;
+    background-color: rgb(var(--color-terracotta));
+    color: rgb(var(--color-ink));
   }
 }
 
@@ -35,5 +52,11 @@
   .marquee-track {
     width: max-content;
     will-change: transform;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -6,19 +6,20 @@ const config: Config = {
     './components/**/*.{ts,tsx}',
     './content/**/*.{mdx,ts}',
   ],
+  darkMode: ['class', '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        ink: '#151f23',
-        bone: '#e6edf1',
+        ink: 'rgb(var(--color-ink) / <alpha-value>)',
+        bone: 'rgb(var(--color-bone) / <alpha-value>)',
         terracotta: {
-          DEFAULT: '#e26c4b',
-          light: '#e47a5b',
-          dark: '#e05f3c',
+          DEFAULT: 'rgb(var(--color-terracotta) / <alpha-value>)',
+          light: 'rgb(var(--color-terracotta-light) / <alpha-value>)',
+          dark: 'rgb(var(--color-terracotta-dark) / <alpha-value>)',
         },
         sage: {
-          DEFAULT: '#beb99c',
-          light: '#c9c3a7',
+          DEFAULT: 'rgb(var(--color-sage) / <alpha-value>)',
+          light: 'rgb(var(--color-sage-light) / <alpha-value>)',
         },
       },
       fontFamily: {

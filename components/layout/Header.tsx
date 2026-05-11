@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { navigation } from '@/content/site';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,7 +19,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        'fixed top-0 inset-x-0 z-50 transition-all duration-500',
+        'fixed top-0 inset-x-0 z-50 transition-[padding,backdrop-filter] duration-500',
         scrolled
           ? 'py-4 backdrop-blur-md bg-ink/70 border-b border-bone/5'
           : 'py-6 md:py-8 bg-transparent border-b border-transparent',
@@ -44,13 +45,16 @@ export default function Header() {
           ))}
         </nav>
 
-        <Link
-          href="/contato"
-          className="group inline-flex items-center gap-2 rounded-full border border-bone/20 px-5 py-2.5 text-sm uppercase tracking-[0.18em] text-bone hover:bg-bone hover:text-ink transition-all"
-        >
-          <span>Conversar</span>
-          <span className="block w-1.5 h-1.5 rounded-full bg-terracotta group-hover:bg-ink transition-colors" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            href="/contato"
+            className="group inline-flex items-center gap-2 rounded-full border border-bone/20 px-5 py-2.5 text-sm uppercase tracking-[0.18em] text-bone hover:bg-bone hover:text-ink transition-all"
+          >
+            <span>Conversar</span>
+            <span className="block w-1.5 h-1.5 rounded-full bg-terracotta group-hover:bg-ink transition-colors" />
+          </Link>
+        </div>
       </div>
     </header>
   );

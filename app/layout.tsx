@@ -4,6 +4,8 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SmoothScroll from '@/components/layout/SmoothScroll';
+import ThemeProvider from '@/components/layout/ThemeProvider';
+import LogoIntro from '@/components/intro/LogoIntro';
 
 const hostGrotesk = localFont({
   src: [
@@ -29,13 +31,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={hostGrotesk.variable}>
+    <html lang="pt-BR" className={hostGrotesk.variable} suppressHydrationWarning>
       <body className="bg-ink text-bone">
-        <SmoothScroll>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </SmoothScroll>
+        <ThemeProvider>
+          <LogoIntro />
+          <SmoothScroll>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
