@@ -5,7 +5,7 @@
 @layer base {
   :root,
   [data-theme='dark'] {
-    --color-ink: 16 23 32;
+    --color-ink: 13 13 13;
     --color-bone: 230 237 241;
     --color-terracotta: 226 108 75;
     --color-terracotta-light: 228 122 91;

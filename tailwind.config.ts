@@ -26,9 +26,9 @@ const config: Config = {
         sans: ['var(--font-host)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        display: ['clamp(3rem, 12vw, 14rem)', { lineHeight: '0.9', letterSpacing: '-0.04em' }],
-        hero: ['clamp(2.5rem, 8vw, 8rem)', { lineHeight: '0.95', letterSpacing: '-0.03em' }],
-        section: ['clamp(2rem, 5vw, 5rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        display: ['clamp(2.75rem, 10vw, 11rem)', { lineHeight: '0.9', letterSpacing: '-0.04em' }],
+        hero: ['clamp(2.25rem, 6.5vw, 6.5rem)', { lineHeight: '0.95', letterSpacing: '-0.03em' }],
+        section: ['clamp(1.75rem, 4vw, 4rem)', { lineHeight: '1', letterSpacing: '-0.02em' }],
       },
       animation: {
         marquee: 'marquee 40s linear infinite',

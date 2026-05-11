@@ -24,7 +24,7 @@ export default function ProjectCard({ project, priority = false, layout = 'tall'
     >
       <Link href={`/portfolio/${project.slug}`} className="block">
         <div
-          className={`relative overflow-hidden bg-bone/5 ${
+          className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-bone/5 ${
             layout === 'wide' ? 'aspect-[4/3]' : 'aspect-[4/5]'
           }`}
         >

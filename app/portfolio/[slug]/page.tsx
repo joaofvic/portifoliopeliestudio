@@ -44,7 +44,7 @@ export default function CasePage({ params }: { params: { slug: string } }) {
       </header>
 
       <div className="container-x">
-        <div className="relative aspect-[16/10] overflow-hidden bg-bone/5">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-3xl md:rounded-[2rem] bg-bone/5">
           <Image
             src={project.cover}
             alt={project.title}
@@ -70,7 +70,7 @@ export default function CasePage({ params }: { params: { slug: string } }) {
           {project.gallery.map((src, i) => (
             <div
               key={src + i}
-              className={`relative aspect-[4/5] overflow-hidden bg-bone/5 ${
+              className={`relative aspect-[4/5] overflow-hidden rounded-2xl md:rounded-3xl bg-bone/5 ${
                 i % 3 === 0 ? 'md:col-span-2 md:aspect-[16/9]' : ''
               }`}
             >
