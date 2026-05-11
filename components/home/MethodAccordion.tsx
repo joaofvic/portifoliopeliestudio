@@ -53,8 +53,7 @@ export default function MethodAccordion() {
               <span className="italic text-terracotta">forma à marca</span>.
             </h2>
             <p className="mt-6 max-w-xl text-base md:text-lg text-bone/60 leading-relaxed">
-              O acrônimo <span className="text-bone">PELIĒ</span> guia cinco etapas
-              do nosso processo — do propósito à expressão.
+              Mais do que uma assinatura, <span className="text-bone">Peliē</span> é a base do nosso processo. Cinco etapas estruturadas que guiam a marca em uma jornada clara: do propósito à expressão.
             </p>
           </div>
         </motion.div>
