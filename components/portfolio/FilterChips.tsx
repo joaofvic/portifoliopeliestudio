@@ -15,7 +15,7 @@ export default function FilterChips({ active, onChange, counts }: Props) {
     <div
       role="tablist"
       aria-label="Filtrar projetos por categoria"
-      className="flex flex-wrap items-center gap-2 md:gap-3"
+      className="flex flex-nowrap items-center gap-2 md:gap-3 overflow-x-auto md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {categories.map((cat) => {
         const isActive = cat.slug === active;
@@ -28,7 +28,7 @@ export default function FilterChips({ active, onChange, counts }: Props) {
             aria-selected={isActive}
             onClick={() => onChange(cat.slug)}
             className={clsx(
-              'relative isolate inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm md:text-base transition-colors',
+              'relative isolate inline-flex shrink-0 items-center gap-2 rounded-full border px-5 py-2.5 text-sm md:text-base transition-colors',
               isActive
                 ? 'text-ink border-bone'
                 : 'text-bone/80 border-bone/20 hover:border-bone/50',

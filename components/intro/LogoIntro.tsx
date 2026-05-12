@@ -48,18 +48,11 @@ export default function LogoIntro() {
           times: [0, 0.25, 0.7, 1],
           ease: [0.4, 0, 0.2, 1],
         }}
-        className="w-[78vw] max-w-[820px]"
+        className="text-center"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/brand/logo-bone.svg"
-          alt="peliē studio"
-          className="w-full h-auto select-none"
-          draggable={false}
-        />
-        <p className="mt-6 text-center text-[10px] uppercase tracking-[0.42em] text-bone/40">
-          estúdio de design
-        </p>
+        <h1 className="font-sans font-light tracking-tight text-5xl md:text-7xl text-bone">
+          estúdio<span className="text-terracotta">.</span>criativo
+        </h1>
       </motion.div>
 
       <motion.span
