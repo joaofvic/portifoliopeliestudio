@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 export default function LogoIntro() {
@@ -48,11 +49,19 @@ export default function LogoIntro() {
           times: [0, 0.25, 0.7, 1],
           ease: [0.4, 0, 0.2, 1],
         }}
-        className="text-center"
+        className="flex flex-col items-center text-center"
       >
-        <h1 className="font-sans font-light tracking-tight text-5xl md:text-7xl text-bone">
-          estúdio<span className="text-terracotta">.</span>criativo
-        </h1>
+        <Image
+          src="/brand/logo-terracotta.svg"
+          alt="peliē"
+          width={1717}
+          height={399}
+          priority
+          className="w-[60vw] max-w-[420px] md:max-w-[560px] h-auto"
+        />
+        <p className="mt-6 font-sans font-light uppercase tracking-[0.3em] text-xs md:text-sm text-bone/60">
+          estúdio criativo
+        </p>
       </motion.div>
 
       <motion.span
