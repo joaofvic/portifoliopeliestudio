@@ -1,5 +1,6 @@
 import { desc, eq } from 'drizzle-orm';
 import type { CategorySlug } from './categories';
+import { normalizeGalleryItem, type GalleryItem } from './media';
 
 export type Project = {
   id?: string;
@@ -9,7 +10,7 @@ export type Project = {
   year: number;
   category: Exclude<CategorySlug, 'todos'>;
   cover: string;
-  gallery: string[];
+  gallery: GalleryItem[];
   excerpt: string;
   featured: boolean;
   content: string;
@@ -29,11 +30,15 @@ function rowToProject(row: {
   year: number;
   category: string;
   cover: string;
-  gallery: string[];
+  gallery: unknown;
   excerpt: string;
   featured: boolean;
   content: string;
 }): Project {
+  const galleryRaw = Array.isArray(row.gallery) ? row.gallery : [];
+  const gallery = galleryRaw
+    .map(normalizeGalleryItem)
+    .filter((g): g is GalleryItem => g !== null);
   return {
     id: row.id,
     slug: row.slug,
@@ -42,7 +47,7 @@ function rowToProject(row: {
     year: row.year,
     category: row.category as Project['category'],
     cover: row.cover,
-    gallery: row.gallery ?? [],
+    gallery,
     excerpt: row.excerpt,
     featured: row.featured,
     content: row.content,

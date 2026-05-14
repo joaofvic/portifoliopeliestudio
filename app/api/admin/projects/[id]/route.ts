@@ -5,6 +5,7 @@ import { del } from '@vercel/blob';
 import { db, schema } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { parseProjectInput } from '@/lib/projectInput';
+import { normalizeGalleryItem } from '@/lib/media';
 
 export const runtime = 'nodejs';
 
@@ -49,8 +50,11 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       .set({ ...parsed, updatedAt: sql`now()` })
       .where(eq(schema.projects.id, params.id));
 
-    const oldMedia = [existing[0].cover, ...(existing[0].gallery ?? [])];
-    const newMedia = new Set([parsed.cover, ...parsed.gallery]);
+    const oldGalleryUrls = (Array.isArray(existing[0].gallery) ? existing[0].gallery : [])
+      .map((g: unknown) => normalizeGalleryItem(g)?.url)
+      .filter((u): u is string => Boolean(u));
+    const oldMedia = [existing[0].cover, ...oldGalleryUrls];
+    const newMedia = new Set([parsed.cover, ...parsed.gallery.map((g) => g.url)]);
     const orphaned = oldMedia.filter((u) => u && !newMedia.has(u));
     await deleteBlobs(orphaned);
 
@@ -88,7 +92,10 @@ export async function DELETE(_req: NextRequest, { params }: { params: { id: stri
 
   await db.delete(schema.projects).where(eq(schema.projects.id, params.id));
 
-  await deleteBlobs([existing[0].cover, ...(existing[0].gallery ?? [])]);
+  const galleryUrls = (Array.isArray(existing[0].gallery) ? existing[0].gallery : [])
+    .map((g: unknown) => normalizeGalleryItem(g)?.url)
+    .filter((u): u is string => Boolean(u));
+  await deleteBlobs([existing[0].cover, ...galleryUrls]);
 
   revalidatePath('/');
   revalidatePath('/portfolio');

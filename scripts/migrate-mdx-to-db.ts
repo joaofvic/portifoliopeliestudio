@@ -30,7 +30,11 @@ async function main() {
       year: Number(data.year) || new Date().getFullYear(),
       category: data.category ?? 'branding',
       cover: data.cover ?? '',
-      gallery: Array.isArray(data.gallery) ? data.gallery : [],
+      gallery: Array.isArray(data.gallery)
+        ? data.gallery
+            .filter((u: unknown): u is string => typeof u === 'string' && u.length > 0)
+            .map((url: string) => ({ url, aspect: '4/5' as const }))
+        : [],
       excerpt: data.excerpt ?? '',
       featured: Boolean(data.featured),
       content: content.trim(),

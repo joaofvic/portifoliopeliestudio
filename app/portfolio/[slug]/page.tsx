@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllProjects, getProjectBySlug } from '@/lib/projects';
 import { categoryLabel } from '@/lib/categories';
+import { aspectToClass, isVideoUrl } from '@/lib/media';
 
 export const revalidate = 60;
 
@@ -64,23 +65,37 @@ export default async function CasePage({ params }: { params: { slug: string } })
       </section>
 
       {project.gallery.length > 0 && (
-        <section className="container-x pb-24 md:pb-32 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-          {project.gallery.map((src, i) => (
-            <div
-              key={src + i}
-              className={`relative aspect-[4/5] overflow-hidden rounded-2xl md:rounded-3xl bg-bone/5 ${
-                i % 3 === 0 ? 'md:col-span-2 md:aspect-[16/9]' : ''
-              }`}
-            >
-              <Image
-                src={src}
-                alt={`${project.title} — imagem ${i + 1}`}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          ))}
+        <section className="container-x pb-24 md:pb-32 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
+          {project.gallery.map((item, i) => {
+            const video = isVideoUrl(item.url);
+            return (
+              <div
+                key={item.url + i}
+                className={`relative overflow-hidden rounded-2xl md:rounded-3xl bg-bone/5 ${aspectToClass(item.aspect)}`}
+              >
+                {video ? (
+                  /* eslint-disable-next-line jsx-a11y/media-has-caption */
+                  <video
+                    src={item.url}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={item.url}
+                    alt={`${project.title} — imagem ${i + 1}`}
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                )}
+              </div>
+            );
+          })}
         </section>
       )}
 

@@ -3,8 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import MediaUploader from './MediaUploader';
+import ProjectGalleryEditor from './ProjectGalleryEditor';
 import { categories } from '@/lib/categories';
 import type { Project } from '@/lib/projects';
+import type { GalleryItem } from '@/lib/media';
 
 const editableCategories = categories.filter((c) => c.slug !== 'todos');
 
@@ -25,7 +27,7 @@ export default function ProjectForm(props: Props) {
   const [content, setContent] = useState(initial?.content ?? '');
   const [featured, setFeatured] = useState(initial?.featured ?? false);
   const [cover, setCover] = useState<string[]>(initial?.cover ? [initial.cover] : []);
-  const [gallery, setGallery] = useState<string[]>(initial?.gallery ?? []);
+  const [gallery, setGallery] = useState<GalleryItem[]>(initial?.gallery ?? []);
 
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -179,12 +181,7 @@ export default function ProjectForm(props: Props) {
         multiple={false}
       />
 
-      <MediaUploader
-        label="Galeria"
-        value={gallery}
-        onChange={setGallery}
-        multiple
-      />
+      <ProjectGalleryEditor value={gallery} onChange={setGallery} />
 
       <label className="flex items-center gap-3 cursor-pointer">
         <input

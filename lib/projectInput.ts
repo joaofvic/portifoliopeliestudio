@@ -1,5 +1,6 @@
 import { categories, type CategorySlug } from './categories';
 import { slugify } from './slug';
+import { normalizeGalleryItem, type GalleryItem } from './media';
 
 const allowedCategories = categories
   .map((c) => c.slug)
@@ -12,7 +13,7 @@ export type ProjectInput = {
   year: number;
   category: Exclude<CategorySlug, 'todos'>;
   cover: string;
-  gallery: string[];
+  gallery: GalleryItem[];
   excerpt: string;
   featured: boolean;
   content: string;
@@ -39,7 +40,9 @@ export function parseProjectInput(body: unknown): ProjectInput | { error: string
   }
 
   const gallery = Array.isArray(b.gallery)
-    ? b.gallery.filter((g): g is string => typeof g === 'string' && g.length > 0)
+    ? b.gallery
+        .map(normalizeGalleryItem)
+        .filter((g): g is GalleryItem => g !== null)
     : [];
 
   return {
