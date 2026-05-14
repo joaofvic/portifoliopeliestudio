@@ -16,8 +16,9 @@ type Props = {
 export default function SiteChrome({ children, meta, contact }: Props) {
   const pathname = usePathname() ?? '';
   const isAdmin = pathname.startsWith('/admin');
+  const isLinks = pathname === '/links';
 
-  if (isAdmin) {
+  if (isAdmin || isLinks) {
     return <>{children}</>;
   }
 
