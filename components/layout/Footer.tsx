@@ -1,7 +1,13 @@
 import Link from 'next/link';
-import { site, navigation } from '@/content/site';
+import { navigation } from '@/content/site';
+import type { ContactContent, SiteMetaContent } from '@/lib/siteContent';
 
-export default function Footer() {
+type Props = {
+  meta: SiteMetaContent;
+  contact: ContactContent;
+};
+
+export default function Footer({ meta, contact }: Props) {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-bone/10 mt-32">
@@ -14,10 +20,10 @@ export default function Footer() {
               <span className="italic text-terracotta">algo memorável</span>?
             </p>
             <Link
-              href={`mailto:${site.email}`}
+              href={`mailto:${contact.email}`}
               className="mt-10 inline-block text-xl md:text-2xl underline decoration-terracotta underline-offset-8 decoration-1 hover:text-terracotta transition-colors"
             >
-              {site.email}
+              {contact.email}
             </Link>
           </div>
 
@@ -39,17 +45,17 @@ export default function Footer() {
             <ul className="space-y-2 text-base">
               <li>
                 <a
-                  href={site.instagram}
+                  href={contact.instagram}
                   target="_blank"
                   rel="noreferrer"
                   className="hover:text-terracotta transition-colors"
                 >
-                  Instagram {site.instagramHandle}
+                  Instagram {contact.instagramHandle}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${site.email}`}
+                  href={`mailto:${contact.email}`}
                   className="hover:text-terracotta transition-colors"
                 >
                   E-mail
@@ -60,8 +66,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-20 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs uppercase tracking-[0.2em] text-bone/40">
-          <span>© {year} {site.name}. Todos os direitos reservados.</span>
-          <span>{site.location}</span>
+          <span>© {year} {meta.name}. Todos os direitos reservados.</span>
+          <span>{meta.location}</span>
         </div>
       </div>
     </footer>

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import SmoothScroll from '@/components/layout/SmoothScroll';
 import ThemeProvider from '@/components/layout/ThemeProvider';
-import LogoIntro from '@/components/intro/LogoIntro';
+import SiteChrome from '@/components/layout/SiteChrome';
+import { getContent, getManyContent } from '@/lib/siteContent';
 
 const hostGrotesk = localFont({
   src: [
@@ -16,30 +14,30 @@ const hostGrotesk = localFont({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: 'peliē studio — design e direção criativa',
-  description:
-    'Estúdio de design dedicado a marcas que querem ser lembradas. Branding, social media, motion, fotografia e vídeo.',
-  icons: { icon: '/favicon.png' },
-  openGraph: {
-    title: 'peliē studio',
-    description: 'Estúdio de design dedicado a marcas que querem ser lembradas.',
-    type: 'website',
-    locale: 'pt_BR',
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const meta = await getContent('site.meta');
+  return {
+    title: `${meta.name} — ${meta.tagline}`,
+    description: meta.defaultDescription,
+    icons: { icon: '/favicon.png' },
+    openGraph: {
+      title: meta.name,
+      description: meta.defaultDescription,
+      type: 'website',
+      locale: 'pt_BR',
+    },
+  };
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const chrome = await getManyContent(['site.meta', 'contact']);
   return (
     <html lang="pt-BR" className={hostGrotesk.variable} suppressHydrationWarning>
       <body className="bg-ink text-bone">
         <ThemeProvider>
-          <LogoIntro />
-          <SmoothScroll>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-          </SmoothScroll>
+          <SiteChrome meta={chrome['site.meta']} contact={chrome.contact}>
+            {children}
+          </SiteChrome>
         </ThemeProvider>
       </body>
     </html>

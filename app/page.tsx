@@ -5,17 +5,23 @@ import ServicesGrid from '@/components/home/ServicesGrid';
 import FeaturedGrid from '@/components/home/FeaturedGrid';
 import MethodAccordion from '@/components/home/MethodAccordion';
 import { getFeaturedProjects } from '@/lib/projects';
+import { getManyContent } from '@/lib/siteContent';
 
-export default function HomePage() {
-  const featured = getFeaturedProjects().slice(0, 4);
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const [featured, content] = await Promise.all([
+    getFeaturedProjects().then((p) => p.slice(0, 4)),
+    getManyContent(['hero', 'clients.marquee', 'manifesto', 'services', 'method']),
+  ]);
   return (
     <>
-      <Hero />
-      <ClientMarquee />
-      <Manifesto />
-      <ServicesGrid />
+      <Hero content={content.hero} />
+      <ClientMarquee content={content['clients.marquee']} />
+      <Manifesto content={content.manifesto} />
+      <ServicesGrid content={content.services} />
       <FeaturedGrid projects={featured} />
-      <MethodAccordion />
+      <MethodAccordion content={content.method} />
     </>
   );
 }

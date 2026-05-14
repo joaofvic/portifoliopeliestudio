@@ -2,36 +2,9 @@
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
+import type { MethodContent } from '@/lib/siteContent';
 
-const pillars = [
-  {
-    letter: 'P',
-    title: 'Propósito',
-    body: 'Descobrir a essência da marca, o porquê da existência e a direção que guia todas as decisões.',
-  },
-  {
-    letter: 'E',
-    title: 'Estrutura',
-    body: 'Organizar posicionamento, oferta e prioridades para que a marca tenha clareza e consistência.',
-  },
-  {
-    letter: 'L',
-    title: 'Linguagem',
-    body: 'Definir tom, narrativa e sistema verbal para comunicar com precisão e personalidade.',
-  },
-  {
-    letter: 'I',
-    title: 'Identidade',
-    body: 'Construir o universo visual da marca, traduzindo estratégia em forma, cor, tipografia e composição.',
-  },
-  {
-    letter: 'E',
-    title: 'Expressão',
-    body: 'Levar a marca para o mundo com presença, coerência e impacto em cada ponto de contato.',
-  },
-];
-
-export default function MethodAccordion() {
+export default function MethodAccordion({ content }: { content: MethodContent }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -45,21 +18,21 @@ export default function MethodAccordion() {
           className="grid md:grid-cols-12 gap-10 mb-16 md:mb-24"
         >
           <p className="md:col-span-3 text-xs uppercase tracking-[0.3em] text-bone/50">
-            (método)
+            {content.eyebrow}
           </p>
           <div className="md:col-span-9">
             <h2 className="text-section font-light">
-              estratégia que dá{' '}
-              <span className="italic text-terracotta">forma à marca</span>.
+              {content.title}{' '}
+              <span className="italic text-terracotta">{content.titleItalic}</span>.
             </h2>
             <p className="mt-6 max-w-xl text-base md:text-lg text-bone/60 leading-relaxed">
-              Mais do que uma assinatura, <span className="text-bone">Peliē</span> é a base do nosso processo. Cinco etapas estruturadas que guiam a marca em uma jornada clara: do propósito à expressão.
+              {content.intro}
             </p>
           </div>
         </motion.div>
 
         <ul className="border-t border-bone/10">
-          {pillars.map((p, i) => {
+          {content.pillars.map((p, i) => {
             const isOpen = open === i;
             const panelId = `pillar-panel-${i}`;
             const buttonId = `pillar-button-${i}`;
@@ -78,7 +51,7 @@ export default function MethodAccordion() {
                   </span>
                   <span className="flex-1 text-3xl md:text-5xl lg:text-6xl font-light tracking-tight">
                     <span className="text-terracotta">{p.letter}</span>
-                    {p.title.slice(1)}
+                    {p.title.slice(p.letter.length)}
                   </span>
                   <span
                     aria-hidden="true"

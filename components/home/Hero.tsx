@@ -2,8 +2,9 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import type { HeroContent } from '@/lib/siteContent';
 
-export default function Hero() {
+export default function Hero({ content }: { content: HeroContent }) {
   return (
     <section className="relative pt-32 md:pt-44 pb-20 md:pb-32">
       <div className="container-x">
@@ -15,17 +16,18 @@ export default function Hero() {
         >
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
+            key={`${content.videoWebm}|${content.videoMp4}`}
             className="absolute inset-0 w-full h-full object-cover"
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
-            poster="/hero/hero-poster.jpg"
+            poster={content.poster || undefined}
             aria-hidden="true"
           >
-            <source src="/hero/hero-bg.webm" type="video/webm" />
-            <source src="/hero/hero-bg.mp4" type="video/mp4" />
+            {content.videoWebm && <source src={content.videoWebm} type="video/webm" />}
+            {content.videoMp4 && <source src={content.videoMp4} type="video/mp4" />}
           </video>
           <div className="absolute inset-0 bg-ink/40" />
 
@@ -42,7 +44,7 @@ export default function Hero() {
                 transition={{ duration: 0.9, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
-                design para
+                {content.line1}
               </motion.span>
               <motion.span
                 initial={{ y: 60, opacity: 0 }}
@@ -50,7 +52,7 @@ export default function Hero() {
                 transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="block italic text-terracotta"
               >
-                marcas
+                {content.line2Italic}
               </motion.span>
               <motion.span
                 initial={{ y: 60, opacity: 0 }}
@@ -58,7 +60,7 @@ export default function Hero() {
                 transition={{ duration: 0.9, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
-                memoráveis.
+                {content.line3}
               </motion.span>
             </motion.h1>
           </div>
@@ -71,10 +73,10 @@ export default function Hero() {
           className="mt-12 md:mt-16 flex justify-end"
         >
           <Link
-            href="/portfolio"
+            href={content.ctaHref || '/portfolio'}
             className="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.18em] hover:text-terracotta transition-colors"
           >
-            <span>Ver portfólio</span>
+            <span>{content.ctaLabel}</span>
             <span className="block h-px w-12 bg-bone/40 group-hover:w-20 group-hover:bg-terracotta transition-all duration-500" />
           </Link>
         </motion.div>

@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import clsx from 'clsx';
-import { navigation, site } from '@/content/site';
+import { navigation } from '@/content/site';
+import type { ContactContent } from '@/lib/siteContent';
 import ThemeToggle from './ThemeToggle';
 
-export default function Header() {
+export default function Header({ contact }: { contact: ContactContent }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -137,11 +138,11 @@ export default function Header() {
               transition={{ delay: 0.32, duration: 0.4 }}
               className="mt-16 pt-8 border-t border-bone/10 space-y-3 text-sm text-bone/60"
             >
-              <a href={`mailto:${site.email}`} className="block hover:text-terracotta transition-colors">
-                {site.email}
+              <a href={`mailto:${contact.email}`} className="block hover:text-terracotta transition-colors">
+                {contact.email}
               </a>
-              <a href={site.instagram} target="_blank" rel="noreferrer" className="block hover:text-terracotta transition-colors">
-                {site.instagramHandle}
+              <a href={contact.instagram} target="_blank" rel="noreferrer" className="block hover:text-terracotta transition-colors">
+                {contact.instagramHandle}
               </a>
             </motion.div>
           </motion.div>

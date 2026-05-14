@@ -1,16 +1,14 @@
 'use client';
 
-import { clients } from '@/content/clients';
+import type { ClientsContent } from '@/lib/siteContent';
 
-export default function ClientMarquee() {
-  const items = [...clients, ...clients];
+export default function ClientMarquee({ content }: { content: ClientsContent }) {
+  const items = [...content.items, ...content.items];
 
   return (
     <section className="border-y border-bone/10 py-10 md:py-14 overflow-hidden">
       <div className="container-x mb-8">
-        <p className="text-xs uppercase tracking-[0.3em] text-bone/50">
-          Marcas que passaram por aqui
-        </p>
+        <p className="text-xs uppercase tracking-[0.3em] text-bone/50">{content.label}</p>
       </div>
       <div
         className="group relative overflow-hidden"

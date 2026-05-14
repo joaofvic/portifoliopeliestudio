@@ -5,12 +5,10 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getAllProjects, getProjectBySlug } from '@/lib/projects';
 import { categoryLabel } from '@/lib/categories';
 
-export function generateStaticParams() {
-  return getAllProjects().map((p) => ({ slug: p.slug }));
-}
+export const revalidate = 60;
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug);
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const project = await getProjectBySlug(params.slug);
   if (!project) return {};
   return {
     title: `${project.title} — peliē studio`,
@@ -18,13 +16,13 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
   };
 }
 
-export default function CasePage({ params }: { params: { slug: string } }) {
-  const project = getProjectBySlug(params.slug);
+export default async function CasePage({ params }: { params: { slug: string } }) {
+  const project = await getProjectBySlug(params.slug);
   if (!project) notFound();
 
-  const all = getAllProjects();
+  const all = await getAllProjects();
   const idx = all.findIndex((p) => p.slug === project.slug);
-  const next = all[(idx + 1) % all.length];
+  const next = all[(idx + 1) % all.length] ?? project;
 
   return (
     <article className="pt-32 md:pt-44">

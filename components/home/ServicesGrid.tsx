@@ -1,17 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import type { ServicesContent } from '@/lib/siteContent';
 
-const services = [
-  { title: 'Branding', desc: 'Identidade, naming, manual de marca e sistemas visuais.' },
-  { title: 'Social Media', desc: 'Estratégia e produção contínua de conteúdo.' },
-  { title: 'Motion', desc: 'Animação para vinhetas, redes e apresentações.' },
-  { title: 'Fotografia', desc: 'Direção e produção fotográfica de produto e estilo de vida.' },
-  { title: 'Headshot', desc: 'Retratos corporativos com tratamento autoral.' },
-  { title: 'Vídeo', desc: 'Filmes de marca, lançamentos e campanhas.' },
-];
-
-export default function ServicesGrid() {
+export default function ServicesGrid({ content }: { content: ServicesContent }) {
   return (
     <section className="py-24 md:py-40">
       <div className="container-x">
@@ -23,15 +15,15 @@ export default function ServicesGrid() {
           className="grid md:grid-cols-12 gap-10 mb-16 md:mb-20"
         >
           <p className="md:col-span-3 text-xs uppercase tracking-[0.3em] text-bone/50">
-            (serviços)
+            {content.eyebrow}
           </p>
-          <h2 className="md:col-span-9 text-section font-light">o que fazemos</h2>
+          <h2 className="md:col-span-9 text-section font-light">{content.title}</h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-x-10 gap-y-12">
-          {services.map((s, i) => (
+          {content.items.map((s, i) => (
             <motion.div
-              key={s.title}
+              key={`${s.title}-${i}`}
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}

@@ -7,8 +7,10 @@ export const metadata = {
   description: 'Trabalhos de branding, social, motion, fotografia, headshot e vídeo.',
 };
 
-export default function PortfolioPage() {
-  const projects = getAllProjects();
+export const revalidate = 60;
+
+export default async function PortfolioPage() {
+  const projects = await getAllProjects();
 
   return (
     <section className="pt-32 md:pt-44 pb-32">

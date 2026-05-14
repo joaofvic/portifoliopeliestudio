@@ -1,9 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { site } from '@/content/site';
+import type { ManifestoContent } from '@/lib/siteContent';
 
-export default function Manifesto() {
+export default function Manifesto({ content }: { content: ManifestoContent }) {
   return (
     <section className="py-24 md:py-40">
       <div className="container-x grid md:grid-cols-12 gap-10">
@@ -15,7 +15,7 @@ export default function Manifesto() {
             transition={{ duration: 0.7 }}
             className="text-xs uppercase tracking-[0.3em] text-bone/50"
           >
-            (manifesto)
+            {content.eyebrow}
           </motion.p>
         </div>
         <motion.div
@@ -26,7 +26,7 @@ export default function Manifesto() {
           className="md:col-span-9"
         >
           <p className="text-3xl md:text-5xl lg:text-6xl font-light leading-[1.15] tracking-tight">
-            {site.manifesto.split('—').map((part, i, arr) => (
+            {content.body.split('—').map((part, i, arr) => (
               <span key={i}>
                 {part.trim()}
                 {i < arr.length - 1 && (

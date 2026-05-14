@@ -1,9 +1,8 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import matter from 'gray-matter';
+import { desc, eq } from 'drizzle-orm';
 import type { CategorySlug } from './categories';
 
 export type Project = {
+  id?: string;
   slug: string;
   title: string;
   client: string;
@@ -16,39 +15,73 @@ export type Project = {
   content: string;
 };
 
-const PROJECTS_DIR = path.join(process.cwd(), 'content', 'projects');
-
-export function getAllProjects(): Project[] {
-  if (!fs.existsSync(PROJECTS_DIR)) return [];
-
-  const files = fs.readdirSync(PROJECTS_DIR).filter((f) => f.endsWith('.mdx'));
-
-  return files
-    .map((file) => {
-      const slug = file.replace(/\.mdx$/, '');
-      const raw = fs.readFileSync(path.join(PROJECTS_DIR, file), 'utf8');
-      const { data, content } = matter(raw);
-
-      return {
-        slug,
-        title: data.title ?? slug,
-        client: data.client ?? '',
-        year: Number(data.year) || new Date().getFullYear(),
-        category: data.category ?? 'branding',
-        cover: data.cover ?? '',
-        gallery: Array.isArray(data.gallery) ? data.gallery : [],
-        excerpt: data.excerpt ?? '',
-        featured: Boolean(data.featured),
-        content,
-      } satisfies Project;
-    })
-    .sort((a, b) => b.year - a.year);
+async function getDb() {
+  if (!process.env.DATABASE_URL) return null;
+  const { db, schema } = await import('./db');
+  return { db, schema };
 }
 
-export function getProjectBySlug(slug: string): Project | null {
-  return getAllProjects().find((p) => p.slug === slug) ?? null;
+function rowToProject(row: {
+  id: string;
+  slug: string;
+  title: string;
+  client: string;
+  year: number;
+  category: string;
+  cover: string;
+  gallery: string[];
+  excerpt: string;
+  featured: boolean;
+  content: string;
+}): Project {
+  return {
+    id: row.id,
+    slug: row.slug,
+    title: row.title,
+    client: row.client,
+    year: row.year,
+    category: row.category as Project['category'],
+    cover: row.cover,
+    gallery: row.gallery ?? [],
+    excerpt: row.excerpt,
+    featured: row.featured,
+    content: row.content,
+  };
 }
 
-export function getFeaturedProjects(): Project[] {
-  return getAllProjects().filter((p) => p.featured);
+export async function getAllProjects(): Promise<Project[]> {
+  const conn = await getDb();
+  if (!conn) return [];
+  const rows = await conn.db
+    .select()
+    .from(conn.schema.projects)
+    .orderBy(desc(conn.schema.projects.year), desc(conn.schema.projects.createdAt));
+  return rows.map(rowToProject);
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const conn = await getDb();
+  if (!conn) return null;
+  const rows = await conn.db
+    .select()
+    .from(conn.schema.projects)
+    .where(eq(conn.schema.projects.slug, slug))
+    .limit(1);
+  return rows[0] ? rowToProject(rows[0]) : null;
+}
+
+export async function getProjectById(id: string): Promise<Project | null> {
+  const conn = await getDb();
+  if (!conn) return null;
+  const rows = await conn.db
+    .select()
+    .from(conn.schema.projects)
+    .where(eq(conn.schema.projects.id, id))
+    .limit(1);
+  return rows[0] ? rowToProject(rows[0]) : null;
+}
+
+export async function getFeaturedProjects(): Promise<Project[]> {
+  const all = await getAllProjects();
+  return all.filter((p) => p.featured);
 }
