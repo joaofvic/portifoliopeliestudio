@@ -165,7 +165,7 @@ export const defaults: ContentMap = {
   about: {
     eyebrow: '(sobre)',
     title: 'um estúdio',
-    titleItalic: 'pequeno',
+    titleItalic: 'pequeno por escolha',
     body: siteDefaults.about,
   },
   'about.process': {

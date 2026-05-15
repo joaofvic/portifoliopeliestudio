@@ -22,7 +22,7 @@ export default async function SobrePage() {
         <h1 className="text-display font-light leading-[0.9]">
           {about.title}
           <br />
-          <span className="italic text-terracotta">{about.titleItalic}</span> por escolha.
+          <span className="italic text-terracotta">{about.titleItalic}</span>
         </h1>
         <p className="mt-12 max-w-2xl text-xl md:text-2xl text-bone/75 leading-relaxed">
           {about.body}
