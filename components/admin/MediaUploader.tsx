@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { upload } from '@vercel/blob/client';
 import { useRef, useState } from 'react';
 
 type Props = {
@@ -30,15 +29,30 @@ export default function MediaUploader({ multiple, value, onChange, label, accept
       for (const file of Array.from(files)) {
         i++;
         setProgress(`Enviando ${i}/${files.length}…`);
-        const blob = await upload(file.name, file, {
-          access: 'public',
-          handleUploadUrl: '/api/admin/upload',
-        });
-        uploaded.push(blob.url);
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 120_000);
+        try {
+          const fd = new FormData();
+          fd.append('file', file);
+          const res = await fetch('/api/admin/upload', {
+            method: 'POST',
+            body: fd,
+            signal: controller.signal,
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data?.error ?? `Erro ${res.status}`);
+          uploaded.push(data.url);
+        } finally {
+          clearTimeout(timeoutId);
+        }
       }
       onChange(multiple ? [...value, ...uploaded] : uploaded.slice(-1));
     } catch (e: any) {
-      setError(e?.message ?? 'Falha no upload');
+      console.error('[upload]', e);
+      const msg = e?.name === 'AbortError' || e?.message?.includes('aborted')
+        ? 'Upload cancelado por timeout. Verifique a conexão ou tente um arquivo menor.'
+        : (e?.message ?? 'Falha no upload');
+      setError(msg);
     } finally {
       setBusy(false);
       setProgress(null);
