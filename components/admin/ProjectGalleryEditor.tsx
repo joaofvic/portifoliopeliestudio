@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { GALLERY_ASPECTS, isVideoUrl, type GalleryItem, type GalleryAspect } from '@/lib/media';
+import { uploadMedia } from '@/lib/uploadMedia';
 
 type Props = {
   value: GalleryItem[];
@@ -25,31 +26,17 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
       let i = 0;
       for (const file of Array.from(files)) {
         i++;
-        setProgress(`Enviando ${i}/${files.length}…`);
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 120_000);
-        try {
-          const fd = new FormData();
-          fd.append('file', file);
-          const res = await fetch('/api/admin/upload', {
-            method: 'POST',
-            body: fd,
-            signal: controller.signal,
-          });
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok) throw new Error(data?.error ?? `Erro ${res.status}`);
-          uploaded.push({ url: data.url, aspect: '4/5' });
-        } finally {
-          clearTimeout(timeoutId);
-        }
+        const n = i;
+        setProgress(`Enviando ${n}/${files.length}…`);
+        const { url } = await uploadMedia(file, {
+          onProgress: (pct) => setProgress(`Enviando ${n}/${files.length}… ${pct}%`),
+        });
+        uploaded.push({ url, aspect: '4/5' });
       }
       onChange([...value, ...uploaded]);
     } catch (e: any) {
       console.error('[upload]', e);
-      const msg = e?.name === 'AbortError' || e?.message?.includes('aborted')
-        ? 'Upload cancelado por timeout. Verifique a conexão ou tente um arquivo menor.'
-        : (e?.message ?? 'Falha no upload');
-      setError(msg);
+      setError(e?.message ?? 'Falha no upload');
     } finally {
       setBusy(false);
       setProgress(null);
