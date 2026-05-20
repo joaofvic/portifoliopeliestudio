@@ -13,9 +13,10 @@ export type HeroContent = {
   ctaHref: string;
 };
 
+export type ClientItem = { name: string; logoUrl?: string };
 export type ClientsContent = {
   label: string;
-  items: string[];
+  items: ClientItem[];
 };
 
 export type ManifestoContent = {
@@ -130,7 +131,7 @@ export const defaults: ContentMap = {
   },
   'clients.marquee': {
     label: 'Marcas que passaram por aqui',
-    items: clientsDefaults,
+    items: clientsDefaults.map((name) => ({ name, logoUrl: '' })),
   },
   manifesto: {
     eyebrow: '(manifesto)',
@@ -218,6 +219,28 @@ export function isContentKey(key: string): key is ContentKey {
   return (CONTENT_KEYS as string[]).includes(key);
 }
 
+function normalizeClients(value: unknown): ClientsContent {
+  const base = defaults['clients.marquee'];
+  const merged = { ...base, ...((value as object) ?? {}) } as ClientsContent & {
+    items: unknown;
+  };
+  const rawItems = (merged as { items: unknown }).items;
+  const items: ClientItem[] = Array.isArray(rawItems)
+    ? rawItems.map((it: unknown) => {
+        if (typeof it === 'string') return { name: it, logoUrl: '' };
+        if (it && typeof it === 'object') {
+          const obj = it as Record<string, unknown>;
+          return {
+            name: typeof obj.name === 'string' ? obj.name : '',
+            logoUrl: typeof obj.logoUrl === 'string' ? obj.logoUrl : '',
+          };
+        }
+        return { name: '', logoUrl: '' };
+      })
+    : base.items;
+  return { ...merged, items } as ClientsContent;
+}
+
 async function getDb() {
   if (!process.env.DATABASE_URL) return null;
   const { db, schema } = await import('./db');
@@ -234,6 +257,9 @@ export async function getContent<K extends ContentKey>(key: K): Promise<ContentM
       .where(eq(conn.schema.siteContent.key, key))
       .limit(1);
     if (!rows[0]) return defaults[key];
+    if (key === 'clients.marquee') {
+      return normalizeClients(rows[0].value) as ContentMap[K];
+    }
     return { ...defaults[key], ...(rows[0].value as object) } as ContentMap[K];
   } catch (err) {
     console.error('getContent failed', key, err);
@@ -254,7 +280,11 @@ export async function getManyContent<K extends ContentKey>(keys: K[]): Promise<{
       .where(inArray(conn.schema.siteContent.key, keys as unknown as string[]));
     for (const row of rows) {
       if (isContentKey(row.key)) {
-        (result as any)[row.key] = { ...(defaults as any)[row.key], ...(row.value as object) };
+        if (row.key === 'clients.marquee') {
+          (result as any)[row.key] = normalizeClients(row.value);
+        } else {
+          (result as any)[row.key] = { ...(defaults as any)[row.key], ...(row.value as object) };
+        }
       }
     }
   } catch (err) {

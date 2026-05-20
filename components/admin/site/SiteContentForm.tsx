@@ -7,6 +7,7 @@ import type {
   ContentMap,
   HeroContent,
   ClientsContent,
+  ClientItem,
   ManifestoContent,
   ServicesContent,
   MethodContent,
@@ -182,15 +183,28 @@ function ClientsFields({ v, patch }: { v: ClientsContent; patch: (p: Partial<Cli
       <Field label="Título / eyebrow">
         <input className={inputClass} value={v.label} onChange={(e) => patch({ label: e.target.value })} />
       </Field>
-      <RepeatableList<{ name: string }>
+      <RepeatableList<ClientItem>
         label="Clientes"
-        items={v.items.map((name) => ({ name }))}
-        onChange={(next) => patch({ items: next.map((x) => x.name) })}
-        empty={{ name: '' }}
+        items={v.items}
+        onChange={(items) => patch({ items })}
+        empty={{ name: '', logoUrl: '' }}
         render={(item, update) => (
-          <Field label="Nome">
-            <input className={inputClass} value={item.name} onChange={(e) => update({ name: e.target.value })} />
-          </Field>
+          <>
+            <Field label="Nome (usado como alt)">
+              <input
+                className={inputClass}
+                value={item.name}
+                onChange={(e) => update({ name: e.target.value })}
+              />
+            </Field>
+            <MediaUploader
+              label="Logotipo"
+              kind="image"
+              multiple={false}
+              value={item.logoUrl ? [item.logoUrl] : []}
+              onChange={(urls) => update({ logoUrl: urls[0] ?? '' })}
+            />
+          </>
         )}
       />
     </>

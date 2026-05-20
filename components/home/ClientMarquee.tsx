@@ -1,9 +1,13 @@
 'use client';
 
-import type { ClientsContent } from '@/lib/siteContent';
+import Image from 'next/image';
+import type { ClientsContent, ClientItem } from '@/lib/siteContent';
 
 export default function ClientMarquee({ content }: { content: ClientsContent }) {
-  const items = [...content.items, ...content.items];
+  const normalized: ClientItem[] = content.items.map((it) =>
+    typeof it === 'string' ? { name: it, logoUrl: '' } : it
+  );
+  const items = [...normalized, ...normalized];
 
   return (
     <section className="border-y border-bone/10 py-10 md:py-14 overflow-hidden">
@@ -14,14 +18,26 @@ export default function ClientMarquee({ content }: { content: ClientsContent }) 
         className="group relative overflow-hidden"
         aria-label="Lista de clientes"
       >
-        <div className="marquee-track flex gap-16 md:gap-24 animate-marquee group-hover:[animation-play-state:paused]">
-          {items.map((name, idx) => (
+        <div className="marquee-track flex items-center gap-16 md:gap-24 animate-marquee group-hover:[animation-play-state:paused]">
+          {items.map((item, idx) => (
             <span
-              key={`${name}-${idx}`}
-              className="text-3xl md:text-5xl font-light tracking-tight whitespace-nowrap text-bone/80 hover:text-terracotta transition-colors"
+              key={`${item.name}-${idx}`}
+              className="flex items-center gap-16 md:gap-24 whitespace-nowrap"
             >
-              {name}
-              <span className="ml-16 md:ml-24 text-terracotta">●</span>
+              {item.logoUrl ? (
+                <Image
+                  src={item.logoUrl}
+                  alt={item.name}
+                  width={200}
+                  height={80}
+                  className="h-10 md:h-14 w-auto object-contain"
+                />
+              ) : (
+                <span className="text-3xl md:text-5xl font-light tracking-tight text-bone/80 hover:text-terracotta transition-colors">
+                  {item.name}
+                </span>
+              )}
+              <span className="text-terracotta">●</span>
             </span>
           ))}
         </div>
