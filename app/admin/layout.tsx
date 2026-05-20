@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import { getSession } from '@/lib/auth';
 import LogoutButton from '@/components/admin/LogoutButton';
 import AdminSidebar from '@/components/admin/AdminSidebar';
+import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import ThemeToggle from '@/components/layout/ThemeToggle';
 
 export const dynamic = 'force-dynamic';
@@ -22,9 +23,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {session && !isLogin && (
         <header className="border-b border-bone/10">
           <div className="container-x flex items-center justify-between py-5">
-            <Link href="/admin" className="text-sm uppercase tracking-[0.3em] text-bone/70 hover:text-terracotta">
-              peliē · admin
-            </Link>
+            <div className="flex items-center gap-3">
+              <AdminMobileNav />
+              <Link href="/admin" className="text-sm uppercase tracking-[0.3em] text-bone/70 hover:text-terracotta">
+                peliē · admin
+              </Link>
+            </div>
             <div className="flex items-center gap-6 text-sm">
               <Link href="/" className="text-bone/60 hover:text-terracotta">
                 Ver site
