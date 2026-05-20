@@ -1,4 +1,5 @@
 import { pgTable, uuid, text, integer, boolean, timestamp, jsonb } from 'drizzle-orm/pg-core';
+import type { GalleryItem } from '@/lib/media';
 
 export const projects = pgTable('projects', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -8,7 +9,7 @@ export const projects = pgTable('projects', {
   year: integer('year').notNull(),
   category: text('category').notNull(),
   cover: text('cover').notNull().default(''),
-  gallery: jsonb('gallery').$type<Array<{ url: string; aspect: '4/5' | '5/4' }>>().notNull().default([]),
+  gallery: jsonb('gallery').$type<GalleryItem[]>().notNull().default([]),
   excerpt: text('excerpt').notNull().default(''),
   featured: boolean('featured').notNull().default(false),
   content: text('content').notNull().default(''),
