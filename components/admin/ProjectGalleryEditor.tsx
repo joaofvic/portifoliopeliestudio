@@ -2,8 +2,16 @@
 
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { GALLERY_ASPECTS, isVideoUrl, type GalleryItem, type GalleryAspect } from '@/lib/media';
+import { GALLERY_ASPECTS, aspectToClass, isVideoUrl, type GalleryItem, type GalleryAspect } from '@/lib/media';
 import { uploadMedia } from '@/lib/uploadMedia';
+
+const ASPECT_LABELS: Record<GalleryAspect, string> = {
+  '1/1': '1080x1080 (1:1)',
+  '16/9': '1920x1080 (16:9)',
+  '9/16': '1080x1920 (9:16)',
+  '4/5': '1080x1350 (4:5)',
+  '5/4': '1350x1080 (5:4)',
+};
 
 type Props = {
   value: GalleryItem[];
@@ -114,7 +122,7 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
                 }}
                 className="rounded-lg overflow-hidden border border-bone/10 bg-bone/5"
               >
-                <div className={`relative bg-ink ${item.aspect === '5/4' ? 'aspect-[5/4]' : 'aspect-[4/5]'}`}>
+                <div className={`relative bg-ink ${aspectToClass(item.aspect)}`}>
                   {video ? (
                     /* eslint-disable-next-line jsx-a11y/media-has-caption */
                     <video
@@ -145,7 +153,7 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
                     >
                       {GALLERY_ASPECTS.map((a) => (
                         <option key={a} value={a} className="bg-ink">
-                          {a}
+                          {ASPECT_LABELS[a]}
                         </option>
                       ))}
                     </select>
@@ -167,8 +175,7 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
       {error && <p className="mt-3 text-sm text-terracotta">{error}</p>}
       {value.length > 1 && (
         <p className="mt-3 text-xs text-bone/40">
-          Arraste os itens para reordenar. Proporção <strong>4/5</strong> é vertical;{' '}
-          <strong>5/4</strong> é horizontal.
+          Arraste os itens para reordenar. Escolha a proporção conforme a dimensão original da mídia.
         </p>
       )}
     </div>

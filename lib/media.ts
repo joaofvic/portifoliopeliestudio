@@ -1,11 +1,11 @@
-export type GalleryAspect = '4/5' | '5/4';
+export type GalleryAspect = '1/1' | '16/9' | '9/16' | '4/5' | '5/4';
 
 export type GalleryItem = {
   url: string;
   aspect: GalleryAspect;
 };
 
-export const GALLERY_ASPECTS: GalleryAspect[] = ['4/5', '5/4'];
+export const GALLERY_ASPECTS: GalleryAspect[] = ['1/1', '16/9', '9/16', '4/5', '5/4'];
 
 const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.mov', '.m4v'];
 
@@ -16,7 +16,19 @@ export function isVideoUrl(url: string): boolean {
 }
 
 export function aspectToClass(aspect: GalleryAspect): string {
-  return aspect === '5/4' ? 'aspect-[5/4]' : 'aspect-[4/5]';
+  switch (aspect) {
+    case '1/1':
+      return 'aspect-square';
+    case '16/9':
+      return 'aspect-video';
+    case '9/16':
+      return 'aspect-[9/16]';
+    case '5/4':
+      return 'aspect-[5/4]';
+    case '4/5':
+    default:
+      return 'aspect-[4/5]';
+  }
 }
 
 export function normalizeGalleryItem(input: unknown): GalleryItem | null {
@@ -28,7 +40,9 @@ export function normalizeGalleryItem(input: unknown): GalleryItem | null {
     const obj = input as Record<string, unknown>;
     const url = typeof obj.url === 'string' ? obj.url : '';
     if (!url) return null;
-    const aspect: GalleryAspect = obj.aspect === '5/4' ? '5/4' : '4/5';
+    const aspect: GalleryAspect = GALLERY_ASPECTS.includes(obj.aspect as GalleryAspect)
+      ? (obj.aspect as GalleryAspect)
+      : '4/5';
     return { url, aspect };
   }
   return null;
