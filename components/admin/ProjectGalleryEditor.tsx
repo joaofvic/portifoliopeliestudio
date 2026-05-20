@@ -143,13 +143,13 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
                     {idx + 1}
                   </span>
                 </div>
-                <div className="flex items-center justify-between gap-2 p-3">
-                  <label className="flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-bone/60">
+                <div className="flex flex-col gap-2 p-3">
+                  <label className="flex flex-col gap-1 text-[11px] uppercase tracking-[0.16em] text-bone/60">
                     <span>Proporção</span>
                     <select
                       value={item.aspect}
                       onChange={(e) => updateItem(idx, { aspect: e.target.value as GalleryAspect })}
-                      className="bg-transparent border-b border-bone/30 text-bone py-1 outline-none focus:border-terracotta"
+                      className="w-full bg-transparent border-b border-bone/30 text-bone py-1 outline-none focus:border-terracotta"
                     >
                       {GALLERY_ASPECTS.map((a) => (
                         <option key={a} value={a} className="bg-ink">
@@ -161,7 +161,7 @@ export default function ProjectGalleryEditor({ value, onChange }: Props) {
                   <button
                     type="button"
                     onClick={() => remove(idx)}
-                    className="text-[11px] uppercase tracking-[0.18em] text-terracotta hover:opacity-80"
+                    className="self-end text-[11px] uppercase tracking-[0.18em] text-terracotta hover:opacity-80"
                   >
                     Remover
                   </button>
