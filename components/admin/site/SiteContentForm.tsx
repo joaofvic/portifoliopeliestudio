@@ -27,7 +27,7 @@ type Props<K extends ContentKey> = {
 
 const titles: Record<ContentKey, { eyebrow: string; title: string }> = {
   hero: { eyebrow: '(home)', title: 'Hero' },
-  'clients.marquee': { eyebrow: '(home)', title: 'Clientes (marquee)' },
+  'clients.marquee': { eyebrow: '(home)', title: 'Clientes' },
   manifesto: { eyebrow: '(home)', title: 'Manifesto' },
   services: { eyebrow: '(home / sobre)', title: 'Serviços' },
   method: { eyebrow: '(home)', title: 'Método' },

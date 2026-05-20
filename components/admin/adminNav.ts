@@ -15,7 +15,7 @@ export const adminNavSections: AdminNavSection[] = [
     group: 'Home',
     items: [
       { label: 'Hero', href: '/admin/site/hero' },
-      { label: 'Clientes (marquee)', href: '/admin/site/clients.marquee' },
+      { label: 'Clientes', href: '/admin/site/clients.marquee' },
       { label: 'Manifesto', href: '/admin/site/manifesto' },
       { label: 'Serviços', href: '/admin/site/services' },
       { label: 'Método', href: '/admin/site/method' },
